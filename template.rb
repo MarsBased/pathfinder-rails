@@ -1,3 +1,9 @@
+if Rails.version[0].to_i >= 5
+  puts ''
+  puts "\e[31mPathfinder only works with Rails versions lower than 5.0.\e[0m"
+  exit
+end
+
 path = if File.exists? @rails_template
           File.dirname(@rails_template)
         else
