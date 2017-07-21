@@ -68,20 +68,20 @@ module Recipes
     def create_routes_file
       @template.remove_file 'config/routes.rb'
       @template.create_file 'config/routes.rb' do <<~RUBY
-      Rails.application.routes.draw do
-      end
+        Rails.application.routes.draw do
+        end
       RUBY
       end
     end
 
     def set_error_handling
       @template.insert_into_file 'config/routes.rb', after: "Rails.application.routes.draw do\n" do <<~RUBY
-        match '/404', to: 'errors#not_found', via: :all
-        match '/500', to: 'errors#internal_error', via: :all
+        \s\smatch '/404', to: 'errors#not_found', via: :all
+        \s\smatch '/500', to: 'errors#internal_error', via: :all
       RUBY
       end
       @template.insert_into_file 'config/application.rb', after: "class Application < Rails::Application\n" do <<~RUBY
-      \tconfig.exceptions_app = self.routes
+        \s\s\s\sconfig.exceptions_app = self.routes
       RUBY
       end
       @template.run 'rails g controller errors not_found internal_error --no-assets --skip-routes --no-controller-specs --no-view-specs --no-helper'
