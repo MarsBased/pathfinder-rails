@@ -25,7 +25,7 @@ module Recipes
         group.gem 'rspec-rails'
         group.gem 'spring'
         group.gem 'figaro'
-        group.gem 'mailcatcher'
+        group.gem 'letter_opener_web'
         group.gem 'factory_girl_rails'
         group.gem 'faker'
         group.gem 'listen'
