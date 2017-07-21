@@ -21,7 +21,7 @@ module Recipes
           end
 
 
-          packages = resources.map { |package, version| "\t\t\t\"#{package}\": \"#{version}\"" }
+          packages = resources.map { |package, version| "\s\s\s\s\s\s\"#{package}\": \"#{version}\"" }
                               .join(",\n")
 
           @template.append_file 'bower.json', "#{packages}\n" unless packages.empty?

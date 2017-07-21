@@ -50,23 +50,23 @@ module Recipes
 
     def add_sidekiq_web
       @template.insert_into_file 'config/routes.rb', before: "Rails.application.routes.draw do\n" do <<~RUBY
-      require 'sidekiq/web'
+        require 'sidekiq/web'
       RUBY
       end
 
       @template.insert_into_file 'config/routes.rb', after: "Rails.application.routes.draw do\n" do <<~RUBY
-        namespace :admin do
-          authenticate :user, lambda { |u| u.admin? } do
-            mount Sidekiq::Web => '/sidekiq'
-          end
-        end
+        \s\snamespace :admin do
+        \s\s\s\sauthenticate :user, lambda { |u| u.admin? } do
+        \s\s\s\s\s\smount Sidekiq::Web => '/sidekiq'
+        \s\s\s\send
+        \s\send
       RUBY
       end
     end
 
     def set_job_queue
       @template.insert_into_file 'config/application.rb', after: "class Application < Rails::Application\n" do <<~RUBY
-      \tconfig.active_job.queue_adapter = :sidekiq
+        \s\s\s\sconfig.active_job.queue_adapter = :sidekiq
       RUBY
       end
     end
