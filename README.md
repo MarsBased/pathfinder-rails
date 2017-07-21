@@ -9,7 +9,7 @@ Rails Template for MarsBased projects.
 The recommended way to use it is referencing the template directly from the Github repository.
 
 ```
-rails new new_app -m https://raw.githubusercontent.com/MarsBased/pathfinder/master/template.rb
+rails new new_app -m https://raw.githubusercontent.com/MarsBased/pathfinder-rails/master/template.rb
 ```
 
 ## How does it work
@@ -24,7 +24,7 @@ The template.rb file will first clone the whole Pathfinder repository into a tem
 
 You just need to clone the repository
 
-```git clone git@github.com:MarsBased/pathfinder.git```
+```git clone git@github.com:MarsBased/pathfinder-rails.git```
 
 make the desired changes and test it locally by using:
 
