@@ -4,7 +4,7 @@ module Recipes
     def gems
       @template.gem 'bootstrap-sass', '~> 3.3.3'
       @template.gem 'bootstrap-datepicker-rails', '~> 1.6.0' if @template.yes?('Do you want to use Bootstrap datepicker?')
-      @template.gem 'font-awesome-sass', '~> 4.3.0'
+      @template.gem 'font-awesome-sass', '~> 4.7.0'
       @template.gem 'sass-rails', '~> 5.0'
       @template.gem 'modernizr-rails'
       @template.gem 'autoprefixer-rails'
