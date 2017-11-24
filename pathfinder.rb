@@ -8,6 +8,7 @@ require_relative 'recipes/database'
 require_relative 'recipes/devise'
 require_relative 'recipes/git_ignore'
 require_relative 'recipes/modernizr'
+require_relative 'recipes/mailgun'
 require_relative 'recipes/pundit'
 require_relative 'recipes/redis'
 require_relative 'recipes/rollbar'
@@ -44,6 +45,9 @@ class Pathfinder
    def ask_for_recipes
      add_recipe(Recipes::Database.new(self))
      add_recipe(Recipes::CarrierWave.new(self)) if @template.yes?('Do you want to use Carrierwave?')
+     if @template.yes?('Do you want to use Mailgun for production emails?')
+       add_recipe(Recipes::Mailgun.new(self))
+     end
      aux = case @template.ask('Choose Monitoring Engine:',
                     limited_to: %w(rollbar airbrake none))
            when 'rollbar'
