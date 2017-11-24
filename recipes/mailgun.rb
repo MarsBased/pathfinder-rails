@@ -18,5 +18,6 @@ module Recipes
       end
       CODE
     end
+
   end
 end
