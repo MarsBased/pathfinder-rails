@@ -8,10 +8,19 @@ module Recipes
 
     def gems
       @template.gem 'carrierwave'
+      @template.gem 'asset_sync'
       @template.gem 'fog-aws'
     end
 
     def cook
+      add_initializer
+      add_application_config
+      add_production_env_config
+    end
+
+    private
+
+    def add_initializer
       @template.initializer 'carrierwave.rb', <<~CODE
       require 'carrierwave/storage/fog'
       CarrierWave.configure do |config|
@@ -29,6 +38,7 @@ module Recipes
         }
       end
       CODE
+    end
 
       @template.append_file '.env.sample', "\nAWS_ACCESS_KEY=''"
       @template.append_file '.env', "\nAWS_ACCESS_KEY=''"
@@ -38,5 +48,10 @@ module Recipes
       @template.append_file '.env', "\nAWS_S3_BUCKET=''"
     end
 
+    def add_production_env_config
+      @template.gsub_file 'config/environments/production.rb',
+                          '# config.action_controller.asset_host = \'http://assets.example.com\'',
+                          'config.action_controller.asset_host = "//#{ENV[\'FOG_DIRECTORY\']}.s3.amazonaws.com"'
+    end
   end
 end
