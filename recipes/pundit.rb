@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'pundit'
     end
 
-    def init_file
+    def cook
       @template.generate 'pundit:install'
       @template.insert_into_file 'app/controllers/application_controller.rb', after: "class ApplicationController < ActionController::Base\n" do <<-RUBY
   include Pundit

@@ -51,7 +51,7 @@ module Recipes
       end
     end
 
-    def init_file
+    def cook
       create_application_yml
       create_routes_file
       set_error_handling

@@ -7,7 +7,7 @@ module Recipes
       @template.gem 'mini_magick' if @template.yes?("Are you going to handle images with CarrierWave?")
     end
 
-    def init_file
+    def cook
       @template.initializer 'carrierwave.rb', <<~CODE
       require 'carrierwave/storage/fog'
       CarrierWave.configure do |config|

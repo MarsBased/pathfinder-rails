@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'bower-rails'
     end
 
-    def init_file
+    def cook
       @template.run 'rails g bower_rails:initialize json'
       @template.remove_file 'bower.json'
       @template.create_file 'bower.json' do <<~TEXT

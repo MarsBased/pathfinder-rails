@@ -36,7 +36,7 @@ class Pathfinder
    end
 
    def generate_initializers
-     recipes_operation(:init_file)
+     recipes_operation(:cook)
    end
 
    def ask_for_recipes
@@ -83,7 +83,7 @@ class Pathfinder
        after_bundle do
          run 'spring stop'
 
-         configuration.init_file
+         configuration.cook
 
          pathfinder.generate_initializers
 

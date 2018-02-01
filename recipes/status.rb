@@ -1,7 +1,7 @@
 module Recipes
   class Status < Base
 
-    def init_file
+    def cook
       set_route_path
       add_controller
     end

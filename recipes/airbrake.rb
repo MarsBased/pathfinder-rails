@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'airbrake'
     end
 
-    def init_file
+    def cook
       @template.initializer 'airbrake.rb', <<~CODE
       Airbrake.configure do |config|
         config.project_id = ENV['AIRBRAKE_PROJECT_ID']

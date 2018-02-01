@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'rollbar'
     end
 
-    def init_file
+    def cook
       @template.initializer 'rollbar.rb', <<~CODE
       Rollbar.configure do |config|
         config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
