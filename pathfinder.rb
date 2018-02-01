@@ -14,6 +14,7 @@ require_relative 'recipes/rollbar'
 require_relative 'recipes/sidekiq'
 require_relative 'recipes/simple_form'
 require_relative 'recipes/status'
+require_relative 'recipes/testing'
 require_relative 'recipes/utils'
 
 class Pathfinder
@@ -62,6 +63,7 @@ class Pathfinder
      add_recipe(Recipes::Status.new(self))
      add_recipe(Recipes::BowerRails.new(self))
      add_recipe(Recipes::ActiveAdmin.new(self))
+     add_recipe(Recipes::Testing.new(self))
    end
 
    def call
@@ -86,8 +88,6 @@ class Pathfinder
          configuration.init_file
 
          pathfinder.generate_initializers
-
-         generate 'rspec:install'
        end
      end
    end
