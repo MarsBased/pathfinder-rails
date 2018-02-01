@@ -2,7 +2,7 @@ module Recipes
   class Postgres < Base
 
     def gems
-      @template.gem 'pg'
+      @template.gem 'pg', '~> 0.18'
     end
 
     def init_file
