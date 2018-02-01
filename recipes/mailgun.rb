@@ -12,11 +12,15 @@ module Recipes
     private
 
     def add_initializer
-      @template.initializer 'mailgun.rb', <<~CODE
-      Mailgun.configure do |config|
-        config.api_key = 'your-secret-api-key'
+      @template.insert_into_file 'config/environments/production.rb',
+                                  after: "Rails.application.configure do\n" do <<~CODE
+        \s\sconfig.action_mailer.delivery_method = :mailgun
+        \s\sconfig.action_mailer.mailgun_settings = {
+        \s\s\s\sapi_key: 'api-key',
+        \s\s\s\sdomain: 'domain'
+        \s\s}
+        CODE
       end
-      CODE
     end
 
   end
