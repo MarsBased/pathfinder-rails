@@ -53,12 +53,23 @@ module Recipes
 
     def init_file
       create_application_yml
+      create_hound_yml
       create_routes_file
       set_error_handling
       add_rubocop
     end
 
     private
+
+    def create_hound_yml
+      @template.create_file '.hound.yml' do <<~CODE
+        ruby:
+        \s\sconfig_file: .rubocop.yml
+        scss:
+        \s\senabled: false
+      CODE
+      end
+    end
 
     def create_application_yml
       @template.create_file 'config/application.yml'
