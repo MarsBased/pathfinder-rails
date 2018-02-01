@@ -5,7 +5,7 @@ module Recipes
     end
 
     def gems
-      @template.gem 'rails', '~> 5.0'
+      @template.gem 'rails', '~> 5.1.0'
       # Model
       @template.gem 'aasm'
       @template.gem 'keynote'
