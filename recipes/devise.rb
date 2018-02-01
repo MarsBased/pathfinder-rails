@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'devise'
     end
 
-    def init_file
+    def cook
       @template.generate 'devise:install'
       add_development_env_config
       add_route_config

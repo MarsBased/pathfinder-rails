@@ -9,7 +9,7 @@ module Recipes
     def gems
     end
 
-    def init_file
+    def cook
     end
   end
 end

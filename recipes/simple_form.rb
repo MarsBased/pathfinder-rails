@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'simple_form'
     end
 
-    def init_file
+    def cook
       run_generators
       add_sample_i18n
     end

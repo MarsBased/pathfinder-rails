@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'pg'
     end
 
-    def init_file
+    def cook
       @template.inside 'config' do
         @template.remove_file 'database.yml'
         @template.create_file 'database.yml' do <<~EOF

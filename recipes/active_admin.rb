@@ -8,7 +8,7 @@ module Recipes
       end
     end
 
-    def init_file
+    def cook
       return unless @install
       msg = 'What will be the main user class for Devise and ActiveAdmin?'
       user_classname = @template.ask msg, default: 'AdminUser'

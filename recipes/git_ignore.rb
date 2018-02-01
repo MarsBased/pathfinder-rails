@@ -1,7 +1,7 @@
 module Recipes
   class GitIgnore < Base
 
-    def init_file
+    def cook
       @template.remove_file '.gitignore'
       @template.create_file '.gitignore', File.open(gitignore_path).read
     end

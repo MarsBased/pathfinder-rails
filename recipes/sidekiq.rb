@@ -7,7 +7,7 @@ module Recipes
       @template.gem 'sinatra', require: nil
     end
 
-    def init_file
+    def cook
       add_initializer
       add_configuration
       add_sidekiq_web
