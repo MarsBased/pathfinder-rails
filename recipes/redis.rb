@@ -2,7 +2,7 @@ module Recipes
   class Redis < Base
 
     def gems
-      @template.gem 'redis'
+      @template.gem 'redis', '~> 3.3'
     end
 
     def init_file
