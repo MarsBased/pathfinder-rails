@@ -18,11 +18,6 @@ stellar.yml
 # Ignore generated test coverage
 /coverage
 
-# Bower assets
-vendor/assets/.bowerrc
-vendor/assets/bower.json
-vendor/assets/bower_components
-
 # Bundler files
 
 vendor/bundler
