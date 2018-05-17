@@ -65,7 +65,7 @@ class Pathfinder
      if @template.yes?('Do you want to use Modernizr?')
        add_recipe(Recipes::Modernizr.new(self))
      end
-     add_recipe(Recipes::ActiveAdmin.new(´self))
+     add_recipe(Recipes::ActiveAdmin.new(self))
    end
 
    def call
