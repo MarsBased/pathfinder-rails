@@ -39,5 +39,6 @@ module Recipes
     def resources
       [['jquery', '3.3.1'], ['select2', '4.0.3'], ['lodash', '4.16.6']]
     end
+
   end
 end
