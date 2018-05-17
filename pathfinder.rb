@@ -13,23 +13,23 @@ class Pathfinder
    end
 
    def ask_for_recipes
-     # add_recipe(Recipes::Database.new(self))
-     # add_recipe(Recipes::CarrierWave.new(self))
-     # add_recipe(Recipes::Mailgun.new(self))
-     # add_recipe_from_configurator(Configurators::Monitoring.new(self))
-     # add_recipe(Recipes::Assets.new(self))
-     # add_recipe(Recipes::Devise.new(self))
-     # add_recipe(Recipes::Pundit.new(self))
-     # add_recipe(Recipes::GitIgnore.new(self))
-     # add_recipe(Recipes::Redis.new(self))
-     # add_recipe(Recipes::Sidekiq.new(self))
+     add_recipe(Recipes::Database.new(self))
+     add_recipe(Recipes::CarrierWave.new(self))
+     add_recipe(Recipes::Mailgun.new(self))
+     add_recipe_from_configurator(Configurators::Monitoring.new(self))
+     add_recipe(Recipes::Assets.new(self))
+     add_recipe(Recipes::Devise.new(self))
+     add_recipe(Recipes::Pundit.new(self))
+     add_recipe(Recipes::GitIgnore.new(self))
+     add_recipe(Recipes::Redis.new(self))
+     add_recipe(Recipes::Sidekiq.new(self))
      add_recipe(Recipes::SimpleForm.new(self))
      add_configurator(Configurators::FormFramework.new(self))
-     # add_recipe(Recipes::Status.new(self))
-     # add_recipe(Recipes::Webpacker.new(self))
-     # add_recipe(Recipes::Modernizr.new(self))
-     # add_recipe(Recipes::ActiveAdmin.new(self))
-     # add_recipe(Recipes::Testing.new(self))
+     add_recipe(Recipes::Status.new(self))
+     add_recipe(Recipes::Webpacker.new(self))
+     add_recipe(Recipes::Modernizr.new(self))
+     add_recipe(Recipes::ActiveAdmin.new(self))
+     add_recipe(Recipes::Testing.new(self))
    end
 
    def call
