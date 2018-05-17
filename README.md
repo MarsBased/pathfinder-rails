@@ -12,6 +12,8 @@ The recommended way to use it is referencing the template directly from the Gith
 rails new new_app -m https://raw.githubusercontent.com/MarsBased/pathfinder-rails/master/template.rb --skip-turbolinks
 ```
 
+**Note**: You need to have installed Yarn before starting a new project since Rails 5.1 uses it as default JavaScript package manager. You can follow [this installation instructions](https://yarnpkg.com/docs/install).
+
 ## How does it work
 
 Usually, Rails templates are being built from a single template file. However, if you want to create more complex templates, managing everything this way is painful.
