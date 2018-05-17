@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'webpacker', '~> 3.0'
     end
 
-    def init_file
+    def cook
       @template.run 'rails webpacker:install'
       @template.run "yarn add #{package_command_resources}"
       add_javascript_pack_tag
