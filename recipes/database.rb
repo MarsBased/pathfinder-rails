@@ -12,7 +12,7 @@ module Recipes
       end
     end
 
-    def init_file
+    def cook
       @template.rake 'db:create'
     end
 
