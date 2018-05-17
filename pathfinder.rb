@@ -1,23 +1,5 @@
-require_relative 'recipes/base'
-require_relative 'recipes/active_admin'
-require_relative 'recipes/airbrake'
-require_relative 'recipes/assets'
-require_relative 'recipes/carrier_wave'
-require_relative 'recipes/configuration'
-require_relative 'recipes/database'
-require_relative 'recipes/devise'
-require_relative 'recipes/git_ignore'
-require_relative 'recipes/modernizr'
-require_relative 'recipes/mailgun'
-require_relative 'recipes/pundit'
-require_relative 'recipes/redis'
-require_relative 'recipes/rollbar'
-require_relative 'recipes/sidekiq'
-require_relative 'recipes/simple_form'
-require_relative 'recipes/status'
-require_relative 'recipes/testing'
-require_relative 'recipes/utils'
-require_relative 'recipes/webpacker'
+require_relative 'recipes'
+require_relative 'configurators'
 
 class Pathfinder
 
@@ -26,51 +8,28 @@ class Pathfinder
    def initialize(app_name, template)
      @template = template
      @recipes_list = []
+     @configurators_list = []
      @app_name = app_name
    end
 
-   def add_recipe(recipe)
-     @recipes_list << recipe
-     recipe
-   end
-
-   def generate_gems
-     recipes_operation(:gems)
-   end
-
-   def generate_initializers
-     recipes_operation(:cook)
-   end
-
    def ask_for_recipes
-     add_recipe(Recipes::Database.new(self))
-     add_recipe(Recipes::CarrierWave.new(self)) if @template.yes?('Do you want to use Carrierwave?')
-     if @template.yes?('Do you want to use Mailgun for production emails?')
-       add_recipe(Recipes::Mailgun.new(self))
-     end
-     aux = case @template.ask('Choose Monitoring Engine:',
-                    limited_to: %w(rollbar airbrake none))
-           when 'rollbar'
-             Recipes::Rollbar.new(self)
-           when 'airbrake'
-             Recipes::Airbrake.new(self)
-           else
-           end
-     add_recipe(aux) if aux.present?
-     add_recipe(Recipes::Assets.new(self))
-     add_recipe(Recipes::Devise.new(self))
-     add_recipe(Recipes::Pundit.new(self))
-     add_recipe(Recipes::GitIgnore.new(self))
-     add_recipe(Recipes::Redis.new(self))
-     add_recipe(Recipes::Sidekiq.new(self))
+     # add_recipe(Recipes::Database.new(self))
+     # add_recipe(Recipes::CarrierWave.new(self))
+     # add_recipe(Recipes::Mailgun.new(self))
+     # add_recipe_from_configurator(Configurators::Monitoring.new(self))
+     # add_recipe(Recipes::Assets.new(self))
+     # add_recipe(Recipes::Devise.new(self))
+     # add_recipe(Recipes::Pundit.new(self))
+     # add_recipe(Recipes::GitIgnore.new(self))
+     # add_recipe(Recipes::Redis.new(self))
+     # add_recipe(Recipes::Sidekiq.new(self))
      add_recipe(Recipes::SimpleForm.new(self))
-     add_recipe(Recipes::Status.new(self))
-     add_recipe(Recipes::Webpacker.new(self))
-     if @template.yes?('Do you want to use Modernizr?')
-       add_recipe(Recipes::Modernizr.new(self))
-     end
-     add_recipe(Recipes::ActiveAdmin.new(self))
-     add_recipe(Recipes::Testing.new(self))
+     add_configurator(Configurators::FormFramework.new(self))
+     # add_recipe(Recipes::Status.new(self))
+     # add_recipe(Recipes::Webpacker.new(self))
+     # add_recipe(Recipes::Modernizr.new(self))
+     # add_recipe(Recipes::ActiveAdmin.new(self))
+     # add_recipe(Recipes::Testing.new(self))
    end
 
    def call
@@ -87,6 +46,7 @@ class Pathfinder
 
        configuration.gems do
          pathfinder.generate_gems
+         pathfinder.generate_gems_configurations
        end
 
        after_bundle do
@@ -99,10 +59,45 @@ class Pathfinder
      end
    end
 
+   def add_recipe(recipe)
+     if recipe.class.ask
+       @recipes_list << recipe if @template.yes?(recipe.class.ask)
+     else
+       @recipes_list << recipe
+     end
+
+     recipe
+   end
+
+   def add_recipe_from_configurator(configurator)
+     recipe = Configurators::Monitoring.new(self).recipe
+     add_recipe(recipe) if recipe
+   end
+
+   def add_configurator(configurator)
+     @configurators_list << configurator
+   end
+
+   def generate_gems_configurations
+     configurators_operation(:cook)
+   end
+
+   def generate_gems
+     recipes_operation(:gems)
+   end
+
+   def generate_initializers
+     recipes_operation(:cook)
+   end
+
    private
 
    def recipes_operation(method)
      @recipes_list.map(&method.to_sym)
+   end
+
+   def configurators_operation(method)
+     @configurators_list.map(&method.to_sym)
    end
 
 end

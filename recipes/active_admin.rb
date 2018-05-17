@@ -1,18 +1,26 @@
 module Recipes
   class ActiveAdmin < Base
 
+    askable 'Will you need ActiveAdmin to have an admin area?'
+
     def gems
-      if @template.yes? 'Will you need ActiveAdmin to have an admin area?'
-        @install = true
-        @template.gem 'activeadmin'
-      end
+      @install = true
+      @template.gem 'activeadmin'
     end
 
     def cook
       return unless @install
-      msg = 'What will be the main user class for Devise and ActiveAdmin?'
-      user_classname = @template.ask msg, default: 'AdminUser'
-      @template.run "rails g active_admin:install #{user_classname}"
+
+      user_class_name = ask_user_class_name
+      @template.run "rails g active_admin:install #{user_class_name}"
     end
+
+    private
+
+    def ask_for_user_class_name
+      ask = 'What will be the main user class for Devise and ActiveAdmin?'
+      @template.ask(ask, default: 'AdminUser')
+    end
+
   end
 end

@@ -1,10 +1,11 @@
 module Recipes
   class CarrierWave < Base
 
+    askable 'Do you want to use Carrierwave?'
+
     def gems
       @template.gem 'carrierwave'
       @template.gem 'fog-aws'
-      @template.gem 'mini_magick' if @template.yes?("Are you going to handle images with CarrierWave?")
     end
 
     def cook
@@ -36,4 +37,13 @@ module Recipes
       end
     end
   end
+
+  private
+
+  def ask_for_imagemagick
+    if @template.yes?('Are you going to handle images with CarrierWave?')
+      @template.gem 'mini_magick'
+    end
+  end
+
 end

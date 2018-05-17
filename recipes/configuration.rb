@@ -9,11 +9,11 @@ module Recipes
       # Model
       @template.gem 'aasm'
       @template.gem 'keynote'
-      @template.gem 'paranoia' if  @template.yes?('Do you want to use Soft Deletes?')
+      ask_for_soft_deletes
       # Searchs
-      @template.gem 'ransack' if  @template.yes?('Do you want to use Ransack?')
       @template.gem 'kaminari'
-      @template.gem 'searchkick' if  @template.yes?('Are you going to use ElasticSearch?')
+      ask_for_ransack
+      ask_for_elastic_search
       # Emails
       @template.gem 'premailer-rails'
 
@@ -48,6 +48,18 @@ module Recipes
     end
 
     private
+
+    def ask_for_soft_deletes
+      @template.gem 'paranoia' if @template.yes?('Do you want to use Soft Deletes?')
+    end
+
+    def ask_for_ransack
+      @template.gem 'ransack' if @template.yes?('Do you want to use Ransack?')
+    end
+
+    def ask_for_elastic_search
+      @template.gem 'searchkick' if @template.yes?('Are you going to use ElasticSearch?')
+    end
 
     def create_hound_yml
       @template.create_file '.hound.yml' do <<~CODE

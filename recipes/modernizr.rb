@@ -1,6 +1,8 @@
 module Recipes
   class Modernizr < Base
 
+    askable 'Do you want to use Modernizr?'
+
     def gems
       @template.gem 'modernizr-rails'
     end

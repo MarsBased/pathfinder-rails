@@ -14,7 +14,8 @@ module Recipes
     private
 
     def add_development_env_config
-      @template.insert_into_file 'config/environments/development.rb', after: "Rails.application.configure do\n" do <<~RUBY
+      @template.insert_into_file 'config/environments/development.rb',
+                                 after: "Rails.application.configure do\n" do <<~RUBY
         \n
         \s\sconfig.action_controller.asset_host = 'http://localhost:3000'
         \s\sconfig.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
@@ -25,7 +26,8 @@ module Recipes
     end
 
     def add_route_config
-      @template.insert_into_file 'config/routes.rb', after: "Rails.application.routes.draw do\n" do <<~RUBY
+      @template.insert_into_file 'config/routes.rb',
+                                 after: "Rails.application.routes.draw do\n" do <<~RUBY
         \s\sif Rails.env.development?
         \s\s\s\smount LetterOpenerWeb::Engine, at: "/letter_opener"
         \s\send
