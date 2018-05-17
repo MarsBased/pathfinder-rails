@@ -5,7 +5,7 @@ module Recipes
       @template.gem 'modernizr-rails'
     end
 
-    def init_file
+    def cook
       add_javascript_modernizr_tag
     end
 
