@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+bin_path = File.expand_path(File.dirname(__FILE__))
+template = File.join(bin_path, '..', 'lib', 'template.rb')
+app_name = ARGV.shift
+
+command = "rails new #{app_name} -m '#{template}' --skip-turbolinks #{ARGV.join(' ')}"
+system(command)

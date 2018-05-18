@@ -11,7 +11,7 @@ module Recipes
     private
 
     def gitignore_path
-      File.join(File.dirname(__FILE__), '..', '.gitignore')
+      File.join(File.dirname(__FILE__), '..', '..', '.gitignore')
     end
 
   end
