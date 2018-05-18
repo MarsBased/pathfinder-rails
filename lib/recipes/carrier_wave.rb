@@ -39,6 +39,5 @@ module Recipes
         @template.append_file 'application.yml', "\nAWS_S3_BUCKET: ''"
       end
     end
-
   end
 end
