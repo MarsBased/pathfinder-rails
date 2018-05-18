@@ -9,8 +9,8 @@ class Pathfinder
   def initialize(app_name, template)
     @app_name = app_name
     @template = template
-    @utils = Recipes::Utils.new(@template)
     @prompt = TTY::Prompt.new
+    @utils = Recipes::Utils.new(@prompt)
     @recipes_list = []
     @configurators_list = []
   end
@@ -53,8 +53,11 @@ class Pathfinder
       run 'touch Gemfile'
       add_source 'https://rubygems.org'
 
-      append_file 'Gemfile',
-        "ruby \'#{pathfinder.utils.ask_with_default('Which version of ruby do you want to use?', RUBY_VERSION)}\'"
+      ruby_version = pathfinder.utils.ask_with_default(
+        'Which version of ruby do you want to use?',
+        RUBY_VERSION)
+
+      append_file 'Gemfile', "ruby '#{ruby_version}'"
 
       configuration.gems do
         pathfinder.generate_recipes_gems

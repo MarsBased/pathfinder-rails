@@ -7,6 +7,5 @@ module Recipes
     def gems
       @template.gem 'activeadmin'
     end
-
   end
 end

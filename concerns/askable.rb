@@ -25,8 +25,7 @@ module Askable
       return unless ask?
 
       if self.class.options.any?
-        @pathfinder.utils.ask_with_options(self.class.ask,
-                                           limited_to: self.class.options)
+        @pathfinder.utils.ask_with_options(self.class.ask, self.class.options)
       elsif self.class.default
         @pathfinder.utils.ask_with_default(self.class.ask, self.class.default)
       elsif self.class.confirm

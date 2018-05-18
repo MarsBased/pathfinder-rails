@@ -1,26 +1,23 @@
 module Recipes
   class Utils
-
-    def initialize(template)
-      @template = template
+    def initialize(prompt)
+      @prompt = prompt
     end
 
     def ask(question)
-      @template.ask(question)
+      @prompt.ask(question)
     end
 
     def ask_with_confirmation(question)
-      @template.yes?(question)
+      @prompt.select(question, %w[yes no]) == 'yes'
     end
 
     def ask_with_options(question, options)
-      @template.ask(question, options)
+      @prompt.select(question, options)
     end
 
     def ask_with_default(question, default)
-      answer = @template.ask("#{question} (Default #{default})")
-      answer.empty? ? default : answer
+      @prompt.ask("#{question} (#{default})", default: default)
     end
-
   end
 end

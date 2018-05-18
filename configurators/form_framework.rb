@@ -2,13 +2,13 @@ module Configurators
   class FormFramework < Base
 
     askable 'What framework do you want to use for your forms?'
-    optionable %w(marsman bootstrap default)
+    optionable %w(Default Marsman Bootstrap)
 
     def cook
       case ask!
-      when 'marsman'
+      when 'Marsman'
         @template.initializer('simple_form.rb', simple_form_template('marsman.rb'))
-      when 'bootstrap'
+      when 'Bootstrap'
         @template.generate('simple_form:install --bootstrap')
       else
         @template.generate('simple_form:install')
