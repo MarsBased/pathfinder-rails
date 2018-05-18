@@ -2,6 +2,7 @@ module Recipes
   class CarrierWave < Base
 
     askable 'Do you want to use Carrierwave?'
+    confirmable true
 
     def gems
       @template.gem 'carrierwave'
@@ -41,7 +42,7 @@ module Recipes
   private
 
   def ask_for_imagemagick
-    if @template.yes?('Are you going to handle images with CarrierWave?')
+    if @pathfinder.utils.ask('Are you going to handle images with CarrierWave?')
       @template.gem 'mini_magick'
     end
   end

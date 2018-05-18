@@ -5,7 +5,7 @@ module Configurators
     optionable %w(rollbar airbrake none)
 
     def recipe
-      case @template.ask(self.class.ask, limited_to: self.class.options)
+      case ask!
       when 'rollbar'
         Recipes::Rollbar.new(@pathfinder)
       when 'airbrake'

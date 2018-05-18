@@ -2,6 +2,7 @@ module Recipes
   class Modernizr < Base
 
     askable 'Do you want to use Modernizr?'
+    confirmable true
 
     def gems
       @template.gem 'modernizr-rails'

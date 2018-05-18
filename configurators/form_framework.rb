@@ -5,7 +5,7 @@ module Configurators
     optionable %w(marsman bootstrap default)
 
     def cook
-      case @template.ask(self.class.ask, limited_to: self.class.options)
+      case ask!
       when 'marsman'
         @template.initializer('simple_form.rb', simple_form_template('marsman.rb'))
       when 'bootstrap'

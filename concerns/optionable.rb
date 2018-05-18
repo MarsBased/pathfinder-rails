@@ -9,5 +9,9 @@ module Optionable
     def optionable(options)
       @options = options
     end
+
+    def options
+      @options || []
+    end
   end
 end

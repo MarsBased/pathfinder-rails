@@ -2,6 +2,7 @@ module Recipes
   class Mailgun < Base
 
     askable 'Do you want to use Mailgun for production emails?'
+    confirmable true
 
     def gems
       @template.gem 'mailgun-ruby'
