@@ -17,7 +17,7 @@ module Dependable
       self.class.dependent || false
     end
 
-    def runnable?
+    def perform?
       @pathfinder.recipes_list.map(&:class).include?(self.class.dependent.constantize)
     end
   end

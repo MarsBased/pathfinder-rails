@@ -1,5 +1,3 @@
-
-
 module Runnable
   def self.runnables_for_module(mod)
     mod.constants.reduce([]) do |acc, c|

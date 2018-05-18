@@ -76,7 +76,7 @@ class Pathfinder
 
   def add_configurator(configurator)
     if configurator.dependent?
-      @configurators_list << configurator if configurator.runnable?
+      @configurators_list << configurator if configurator.perform?
     else
       @configurators_list << configurator
     end
