@@ -1,5 +1,6 @@
 module Recipes
   class Assets < Base
+    is_runnable
 
     def gems
       @template.gem 'bootstrap-sass', '~> 3.3.3'

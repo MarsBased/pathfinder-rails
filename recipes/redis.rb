@@ -1,6 +1,8 @@
 module Recipes
   class Redis < Base
 
+    is_runnable
+
     def gems
       @template.gem 'redis', '~> 3.3'
     end

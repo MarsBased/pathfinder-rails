@@ -1,6 +1,8 @@
 module Recipes
   class Devise < Base
 
+    is_runnable
+
     def gems
       @template.gem 'devise'
     end

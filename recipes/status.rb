@@ -1,6 +1,8 @@
 module Recipes
   class Status < Base
 
+    is_runnable
+
     def cook
       set_route_path
       add_controller

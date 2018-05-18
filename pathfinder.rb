@@ -1,6 +1,12 @@
 require_relative 'recipes'
 require_relative 'configurators'
+require_relative 'utils'
 require 'tty-prompt'
+require_relative 'recipes/base'
+require 'pry'
+Dir[File.join(__dir__, 'recipes', '*.rb')].each do |recipe_file|
+  require recipe_file
+end
 
 class Pathfinder
 
@@ -10,31 +16,15 @@ class Pathfinder
     @app_name = app_name
     @template = template
     @prompt = TTY::Prompt.new
-    @utils = Recipes::Utils.new(@prompt)
+    @utils = ::Utils.new(@prompt)
     @recipes_list = []
     @configurators_list = []
   end
 
   def ask_for_recipes
-    add_recipe(Recipes::Database.new(self))
-    add_recipe(Recipes::CarrierWave.new(self))
-    add_recipe(Recipes::Mailgun.new(self))
-    add_recipe(Recipes::Assets.new(self))
-    add_recipe(Recipes::BootstrapDatepicker.new(self))
-    add_recipe(Recipes::Devise.new(self))
-    add_recipe(Recipes::Pundit.new(self))
-    add_recipe(Recipes::GitIgnore.new(self))
-    add_recipe(Recipes::Redis.new(self))
-    add_recipe(Recipes::Sidekiq.new(self))
-    add_recipe(Recipes::SimpleForm.new(self))
-    add_recipe(Recipes::Status.new(self))
-    add_recipe(Recipes::Webpacker.new(self))
-    add_recipe(Recipes::Modernizr.new(self))
-    add_recipe(Recipes::ActiveAdmin.new(self))
-    add_recipe(Recipes::Testing.new(self))
-    add_recipe(Recipes::Paranoia.new(self))
-    add_recipe(Recipes::Ransack.new(self))
-    add_recipe(Recipes::ElasticSearch.new(self))
+    ::Runnable.runnables_for_module(::Recipes).each do |recipe|
+      add_recipe(recipe.new(self))
+    end
   end
 
   def ask_for_configurators

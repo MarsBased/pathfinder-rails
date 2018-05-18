@@ -1,6 +1,8 @@
 module Recipes
   class SimpleForm < Base
 
+    is_runnable
+
     def gems
       @template.gem 'simple_form'
     end

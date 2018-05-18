@@ -1,5 +1,8 @@
 module Recipes
   class Testing < Base
+
+    is_runnable
+
     RSPEC_ROOT_FOLDER = 'spec'
     FACTORIES_FOLDERS = [RSPEC_ROOT_FOLDER, 'factories']
     RSPEC_UNIT_FOLDERS = [RSPEC_ROOT_FOLDER, 'models']

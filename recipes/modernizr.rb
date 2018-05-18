@@ -1,6 +1,8 @@
 module Recipes
   class Modernizr < Base
 
+    is_runnable
+
     askable 'Do you want to use Modernizr?'
     confirmable true
 

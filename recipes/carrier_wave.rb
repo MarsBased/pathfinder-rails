@@ -1,6 +1,8 @@
 module Recipes
   class CarrierWave < Base
 
+    is_runnable
+
     askable 'Do you want to use Carrierwave?'
     confirmable true
 

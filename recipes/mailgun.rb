@@ -1,6 +1,8 @@
 module Recipes
   class Mailgun < Base
 
+    is_runnable
+
     askable 'Do you want to use Mailgun for production emails?'
     confirmable true
 

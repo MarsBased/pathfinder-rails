@@ -1,6 +1,8 @@
 module Recipes
   class Sidekiq < Base
 
+    is_runnable
+
     def gems
       @template.gem 'sidekiq'
       @template.gem 'sidekiq-failures'
