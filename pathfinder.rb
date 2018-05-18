@@ -1,9 +1,7 @@
-require_relative 'recipes'
 require_relative 'configurators'
 require_relative 'utils'
 require 'tty-prompt'
-require_relative 'recipes/base'
-require 'pry'
+
 Dir[File.join(__dir__, 'recipes', '*.rb')].each do |recipe_file|
   require recipe_file
 end
@@ -22,7 +20,7 @@ class Pathfinder
   end
 
   def ask_for_recipes
-    ::Runnable.runnables_for_module(::Recipes).each do |recipe|
+    ::AutoRunnable.auto_runnables_for_module(::Recipes).each do |recipe|
       add_recipe(recipe.new(self))
     end
   end

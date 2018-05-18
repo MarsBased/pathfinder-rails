@@ -1,7 +1,7 @@
 module Recipes
   class ActiveAdmin < Base
 
-    is_runnable
+    is_auto_runnable
 
     askable 'Will you need ActiveAdmin to have an admin area?'
     confirmable true

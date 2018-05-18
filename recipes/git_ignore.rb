@@ -1,7 +1,7 @@
 module Recipes
   class GitIgnore < Base
 
-    is_runnable
+    is_auto_runnable
 
     def cook
       @template.remove_file '.gitignore'

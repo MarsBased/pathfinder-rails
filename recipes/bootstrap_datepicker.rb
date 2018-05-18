@@ -1,6 +1,7 @@
 module Recipes
   class BootstrapDatepicker < Base
-    is_runnable
+
+    is_auto_runnable
 
     askable 'Do you want to use Bootstrap datepicker?'
     confirmable true

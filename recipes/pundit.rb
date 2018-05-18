@@ -1,7 +1,7 @@
 module Recipes
   class Pundit < Base
 
-    is_runnable
+    is_auto_runnable
 
     def gems
       @template.gem 'pundit'

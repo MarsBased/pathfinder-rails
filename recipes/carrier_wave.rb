@@ -1,7 +1,7 @@
 module Recipes
   class CarrierWave < Base
 
-    is_runnable
+    is_auto_runnable
 
     askable 'Do you want to use Carrierwave?'
     confirmable true

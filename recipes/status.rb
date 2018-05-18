@@ -1,7 +1,7 @@
 module Recipes
   class Status < Base
 
-    is_runnable
+    is_auto_runnable
 
     def cook
       set_route_path

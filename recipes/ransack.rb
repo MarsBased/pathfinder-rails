@@ -1,7 +1,7 @@
 module Recipes
   class Ransack < Base
 
-    is_runnable
+    is_auto_runnable
 
     askable 'Do you want to use Ransack?'
     confirmable true

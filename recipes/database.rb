@@ -1,7 +1,7 @@
 module Recipes
   class Database < Base
 
-    is_runnable
+    is_auto_runnable
 
     def gems
       case @template.options.database

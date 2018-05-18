@@ -1,7 +1,7 @@
 module Recipes
   class ElasticSearch < Base
 
-    is_runnable
+    is_auto_runnable
 
     askable 'Are you going to use ElasticSearch?'
     confirmable true

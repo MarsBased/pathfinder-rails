@@ -1,7 +1,7 @@
 module Recipes
   class Testing < Base
 
-    is_runnable
+    is_auto_runnable
 
     RSPEC_ROOT_FOLDER = 'spec'
     FACTORIES_FOLDERS = [RSPEC_ROOT_FOLDER, 'factories']

@@ -7,10 +7,9 @@ module Configurators
     def recipe
       case ask!
       when 'Rollbar'
-        Recipes::Rollbar.new(@pathfinder)
+        @pathfinder.add_recipe(Recipes::Rollbar.new(@pathfinder))
       when 'Airbrake'
-        Recipes::Airbrake.new(@pathfinder)
-      else
+        @pathfinder.add_recipe(Recipes::Airbrake.new(@pathfinder))
       end
     end
 
