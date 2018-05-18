@@ -4,7 +4,7 @@ module Recipes
     is_auto_runnable
 
     askable 'Are you going to use ElasticSearch?'
-    confirmable true
+    is_confirmable
 
     def gems
       @template.gem 'searchkick'

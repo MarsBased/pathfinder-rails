@@ -4,14 +4,14 @@ module Confirmable
   end
 
   module ClassMethods
-    attr_accessor :confirm
+    attr_accessor :confirmable
 
-    def confirmable(value)
-      @confirm = value
+    def is_confirmable
+      @confirmable = true
     end
 
-    def confirm
-      @confirm || false
+    def confirmable?
+      @confirmable || false
     end
   end
 end

@@ -28,7 +28,7 @@ module Askable
         @pathfinder.utils.ask_with_options(self.class.ask, self.class.options)
       elsif self.class.default
         @pathfinder.utils.ask_with_default(self.class.ask, self.class.default)
-      elsif self.class.confirm
+      elsif self.class.confirmable?
         @pathfinder.utils.ask_with_confirmation(self.class.ask)
       else
         @pathfinder.utils.ask(self.class.ask)

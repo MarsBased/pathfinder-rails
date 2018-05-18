@@ -4,7 +4,7 @@ module Recipes
     is_auto_runnable
 
     askable 'Do you want to use Ransack?'
-    confirmable true
+    is_confirmable
 
     def gems
       @template.gem 'ransack'

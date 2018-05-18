@@ -3,7 +3,7 @@ module Configurators
 
     askable 'Are you going to handle images with CarrierWave?'
     dependable 'Recipes::CarrierWave'
-    confirmable true
+    is_confirmable
 
     def cook
       if ask!
