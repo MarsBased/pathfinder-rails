@@ -6,10 +6,14 @@ Rails Template for MarsBased projects.
 
 ## Usage
 
-The recommended way to use it is referencing the template directly from the Github repository.
-
+Install the gem
 ```
-rails new new_app -m https://raw.githubusercontent.com/MarsBased/pathfinder-rails/master/template.rb --skip-turbolinks
+gem 'pathfinder-rails'
+```
+
+Create your project
+```
+pathfinder my_app_name
 ```
 
 **Note**: You need to have installed Yarn before starting a new project since Rails 5.1 uses it as default JavaScript package manager. You can follow [this installation instructions](https://yarnpkg.com/docs/install).
