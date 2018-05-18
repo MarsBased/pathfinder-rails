@@ -5,7 +5,8 @@ module Recipes
     end
 
     def gems
-      @template.gem 'rails', '~> 5.1.0'
+      @template.gem 'rails', '>= 5.1.4'
+      @template.gem 'bootsnap', '>= 1.1.0', require: false
 
       @template.gem 'aasm'
       @template.gem 'keynote'

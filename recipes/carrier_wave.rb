@@ -9,6 +9,7 @@ module Recipes
     def gems
       @template.gem 'carrierwave'
       @template.gem 'fog-aws'
+      ask_for_imagemagick
     end
 
     def cook
@@ -39,14 +40,14 @@ module Recipes
         @template.append_file 'application.yml', "\nAWS_S3_BUCKET: ''"
       end
     end
-  end
 
-  private
+    private
 
-  def ask_for_imagemagick
-    if @pathfinder.utils.ask('Are you going to handle images with CarrierWave?')
-      @template.gem 'mini_magick'
+    def ask_for_imagemagick
+      if @pathfinder.utils.ask('Are you going to handle images with CarrierWave?')
+        @template.gem 'mini_magick'
+      end
     end
-  end
 
+  end
 end
