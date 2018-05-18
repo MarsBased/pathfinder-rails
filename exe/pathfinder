@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 
+if ARGV == ['-h'] or ARGV.empty?
+  puts "Usage: pathfinder app_name options"
+  puts ""
+  puts "We use the same options as 'rails new'."
+  puts "Please check them executing 'rails new -h'"
+  exit 0
+end
+
 bin_path = File.expand_path(File.dirname(__FILE__))
 template = File.join(bin_path, '..', 'lib', 'template.rb')
 app_name = ARGV.shift
