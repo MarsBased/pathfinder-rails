@@ -27,8 +27,9 @@ class Pathfinder
 
   def ask_for_configurators
     add_recipe_from_configurator(Configurators::Monitoring.new(self))
-    add_configurator(Configurators::FormFramework.new(self))
     add_configurator(Configurators::ActiveAdmin.new(self))
+    add_configurator(Configurators::FormFramework.new(self))
+    add_configurator(Configurators::ImageMagick.new(self))
   end
 
   def call

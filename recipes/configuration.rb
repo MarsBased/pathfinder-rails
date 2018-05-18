@@ -5,8 +5,7 @@ module Recipes
     end
 
     def gems
-      @template.gem 'rails', '>= 5.1.4'
-      @template.gem 'bootsnap', '>= 1.1.0', require: false
+      @template.gem 'rails', '~= 5.1.0'
 
       @template.gem 'aasm'
       @template.gem 'keynote'
@@ -44,12 +43,6 @@ module Recipes
     end
 
     private
-
-    def ask_for_elastic_search
-      if @pathfinder.utils.ask('Are you going to use ElasticSearch?')
-        @template.gem 'searchkick'
-      end
-    end
 
     def create_hound_yml
       @template.create_file '.hound.yml' do <<~CODE
