@@ -1,14 +1,16 @@
 require_relative 'recipes'
 require_relative 'configurators'
+require 'tty-prompt'
 
 class Pathfinder
 
-  attr_reader :template, :app_name, :utils
+  attr_reader :template, :app_name, :utils, :prompt
 
   def initialize(app_name, template)
     @app_name = app_name
     @template = template
     @utils = Recipes::Utils.new(@template)
+    @prompt = TTY::Prompt.new
     @recipes_list = []
     @configurators_list = []
   end

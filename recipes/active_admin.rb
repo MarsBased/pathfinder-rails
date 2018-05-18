@@ -20,7 +20,7 @@ module Recipes
 
     def ask_for_user_class_name
       ask = 'What will be the main user class for Devise and ActiveAdmin?'
-      @template.ask(ask, default: 'AdminUser')
+      @pathfinder.utils.ask_with_default(ask, default: 'AdminUser')
     end
 
   end
