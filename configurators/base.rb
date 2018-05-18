@@ -3,6 +3,7 @@ require_relative '../concerns/optionable'
 
 module Configurators
   class Base
+
     include ::Askable
     include ::Optionable
 

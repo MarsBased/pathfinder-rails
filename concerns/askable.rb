@@ -6,8 +6,8 @@ module Askable
   module ClassMethods
     attr_accessor :ask
 
-    def askable(askable)
-      @ask = askable
+    def askable(value)
+      @ask = value
     end
   end
 end

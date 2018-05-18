@@ -6,17 +6,16 @@ class Pathfinder
   attr_reader :template, :app_name
 
    def initialize(app_name, template)
+     @app_name = app_name
      @template = template
      @recipes_list = []
      @configurators_list = []
-     @app_name = app_name
    end
 
    def ask_for_recipes
      add_recipe(Recipes::Database.new(self))
      add_recipe(Recipes::CarrierWave.new(self))
      add_recipe(Recipes::Mailgun.new(self))
-     add_recipe_from_configurator(Configurators::Monitoring.new(self))
      add_recipe(Recipes::Assets.new(self))
      add_recipe(Recipes::Devise.new(self))
      add_recipe(Recipes::Pundit.new(self))
@@ -24,16 +23,24 @@ class Pathfinder
      add_recipe(Recipes::Redis.new(self))
      add_recipe(Recipes::Sidekiq.new(self))
      add_recipe(Recipes::SimpleForm.new(self))
-     add_configurator(Configurators::FormFramework.new(self))
      add_recipe(Recipes::Status.new(self))
      add_recipe(Recipes::Webpacker.new(self))
      add_recipe(Recipes::Modernizr.new(self))
      add_recipe(Recipes::ActiveAdmin.new(self))
      add_recipe(Recipes::Testing.new(self))
+     add_recipe(Recipes::Paranoia.new(self))
+     add_recipe(Recipes::Ransack.new(self))
+     add_recipe(Recipes::ElasticSearch.new(self))
+   end
+
+   def ask_for_configurators
+     add_recipe_from_configurator(Configurators::Monitoring.new(self))
+     add_configurator(Configurators::FormFramework.new(self))
    end
 
    def call
      ask_for_recipes
+     ask_for_configurators
      @template.instance_exec(self) do |pathfinder|
        utils = Recipes::Utils.new(self)
        configuration = Recipes::Configuration.new(self)
@@ -45,8 +52,8 @@ class Pathfinder
        append_file 'Gemfile', "ruby \'#{utils.ask_with_default('Which version of ruby do you want to use?', default: RUBY_VERSION)}\'"
 
        configuration.gems do
-         pathfinder.generate_gems
-         pathfinder.generate_gems_configurations
+         pathfinder.generate_recipes_gems
+         pathfinder.generate_configurators_gems
        end
 
        after_bundle do
@@ -54,7 +61,7 @@ class Pathfinder
 
          configuration.cook
 
-         pathfinder.generate_initializers
+         pathfinder.generate_recipes_initializers
        end
      end
    end
@@ -69,24 +76,24 @@ class Pathfinder
      recipe
    end
 
-   def add_recipe_from_configurator(configurator)
-     recipe = Configurators::Monitoring.new(self).recipe
-     add_recipe(recipe) if recipe
-   end
-
    def add_configurator(configurator)
      @configurators_list << configurator
    end
 
-   def generate_gems_configurations
+   def add_recipe_from_configurator(configurator)
+     recipe = configurator.recipe
+     add_recipe(recipe) if recipe
+   end
+
+   def generate_configurators_gems
      configurators_operation(:cook)
    end
 
-   def generate_gems
+   def generate_recipes_gems
      recipes_operation(:gems)
    end
 
-   def generate_initializers
+   def generate_recipes_initializers
      recipes_operation(:cook)
    end
 

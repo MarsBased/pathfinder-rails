@@ -6,15 +6,10 @@ module Recipes
 
     def gems
       @template.gem 'rails', '~> 5.1.0'
-      # Model
+
       @template.gem 'aasm'
       @template.gem 'keynote'
-      ask_for_soft_deletes
-      # Searchs
       @template.gem 'kaminari'
-      ask_for_ransack
-      ask_for_elastic_search
-      # Emails
       @template.gem 'premailer-rails'
 
       yield if block_given?
@@ -48,14 +43,6 @@ module Recipes
     end
 
     private
-
-    def ask_for_soft_deletes
-      @template.gem 'paranoia' if @template.yes?('Do you want to use Soft Deletes?')
-    end
-
-    def ask_for_ransack
-      @template.gem 'ransack' if @template.yes?('Do you want to use Ransack?')
-    end
 
     def ask_for_elastic_search
       @template.gem 'searchkick' if @template.yes?('Are you going to use ElasticSearch?')

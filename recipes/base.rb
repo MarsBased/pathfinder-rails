@@ -2,6 +2,7 @@ require_relative '../concerns/askable'
 
 module Recipes
   class Base
+
     include ::Askable
 
     def initialize(pathfinder)
