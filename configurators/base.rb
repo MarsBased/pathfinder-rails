@@ -1,6 +1,7 @@
 require_relative '../concerns/askable'
 require_relative '../concerns/optionable'
 require_relative '../concerns/confirmable'
+require_relative '../concerns/dependable'
 
 module Configurators
   class Base
@@ -8,6 +9,7 @@ module Configurators
     include ::Askable
     include ::Optionable
     include ::Confirmable
+    include ::Dependable
 
     def initialize(pathfinder)
       @pathfinder = pathfinder

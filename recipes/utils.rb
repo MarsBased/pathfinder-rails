@@ -17,7 +17,7 @@ module Recipes
       @template.ask(question, options)
     end
 
-    def ask_with_default(question, default:)
+    def ask_with_default(question, default)
       answer = @template.ask("#{question} (Default #{default})")
       answer.empty? ? default : answer
     end

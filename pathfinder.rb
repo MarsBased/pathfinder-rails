@@ -4,7 +4,7 @@ require 'tty-prompt'
 
 class Pathfinder
 
-  attr_reader :template, :app_name, :utils, :prompt
+  attr_reader :template, :app_name, :utils, :prompt, :recipes_list
 
   def initialize(app_name, template)
     @app_name = app_name
@@ -16,30 +16,31 @@ class Pathfinder
   end
 
   def ask_for_recipes
-    add_recipe(Recipes::Database.new(self))
-    add_recipe(Recipes::CarrierWave.new(self))
-    add_recipe(Recipes::Mailgun.new(self))
-    add_recipe(Recipes::Assets.new(self))
-    add_recipe(Recipes::BootstrapDatepicker.new(self))
-    add_recipe(Recipes::Devise.new(self))
-    add_recipe(Recipes::Pundit.new(self))
-    add_recipe(Recipes::GitIgnore.new(self))
-    add_recipe(Recipes::Redis.new(self))
-    add_recipe(Recipes::Sidekiq.new(self))
-    add_recipe(Recipes::SimpleForm.new(self))
-    add_recipe(Recipes::Status.new(self))
-    add_recipe(Recipes::Webpacker.new(self))
-    add_recipe(Recipes::Modernizr.new(self))
+    # add_recipe(Recipes::Database.new(self))
+    # add_recipe(Recipes::CarrierWave.new(self))
+    # add_recipe(Recipes::Mailgun.new(self))
+    # add_recipe(Recipes::Assets.new(self))
+    # add_recipe(Recipes::BootstrapDatepicker.new(self))
+    # add_recipe(Recipes::Devise.new(self))
+    # add_recipe(Recipes::Pundit.new(self))
+    # add_recipe(Recipes::GitIgnore.new(self))
+    # add_recipe(Recipes::Redis.new(self))
+    # add_recipe(Recipes::Sidekiq.new(self))
+    # add_recipe(Recipes::SimpleForm.new(self))
+    # add_recipe(Recipes::Status.new(self))
+    # add_recipe(Recipes::Webpacker.new(self))
+    # add_recipe(Recipes::Modernizr.new(self))
     add_recipe(Recipes::ActiveAdmin.new(self))
-    add_recipe(Recipes::Testing.new(self))
-    add_recipe(Recipes::Paranoia.new(self))
-    add_recipe(Recipes::Ransack.new(self))
-    add_recipe(Recipes::ElasticSearch.new(self))
+    # add_recipe(Recipes::Testing.new(self))
+    # add_recipe(Recipes::Paranoia.new(self))
+    # add_recipe(Recipes::Ransack.new(self))
+    # add_recipe(Recipes::ElasticSearch.new(self))
   end
 
   def ask_for_configurators
     add_recipe_from_configurator(Configurators::Monitoring.new(self))
     add_configurator(Configurators::FormFramework.new(self))
+    add_configurator(Configurators::ActiveAdmin.new(self))
   end
 
   def call
@@ -53,7 +54,7 @@ class Pathfinder
       add_source 'https://rubygems.org'
 
       append_file 'Gemfile',
-        "ruby \'#{pathfinder.utils.ask_with_default('Which version of ruby do you want to use?', default: RUBY_VERSION)}\'"
+        "ruby \'#{pathfinder.utils.ask_with_default('Which version of ruby do you want to use?', RUBY_VERSION)}\'"
 
       configuration.gems do
         pathfinder.generate_recipes_gems
@@ -81,7 +82,11 @@ class Pathfinder
   end
 
   def add_configurator(configurator)
-    @configurators_list << configurator
+    if configurator.dependent?
+      @configurators_list << configurator if configurator.runnable?
+    else
+      @configurators_list << configurator
+    end
   end
 
   def add_recipe_from_configurator(configurator)

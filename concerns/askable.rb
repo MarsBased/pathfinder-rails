@@ -5,10 +5,14 @@ module Askable
   end
 
   module ClassMethods
-    attr_accessor :ask
+    attr_accessor :ask, :default
 
     def askable(value)
       @ask = value
+    end
+
+    def default_answer(value)
+      @default = value
     end
   end
 
@@ -23,6 +27,8 @@ module Askable
       if self.class.options.any?
         @pathfinder.utils.ask_with_options(self.class.ask,
                                            limited_to: self.class.options)
+      elsif self.class.default
+        @pathfinder.utils.ask_with_default(self.class.ask, self.class.default)
       elsif self.class.confirm
         @pathfinder.utils.ask_with_confirmation(self.class.ask)
       else
