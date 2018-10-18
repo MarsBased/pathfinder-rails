@@ -40,13 +40,14 @@ module Recipes
       CODE
     end
 
+    def add_application_config
       @template.append_file '.env.sample', "\nAWS_ACCESS_KEY=''"
-      @template.append_file '.env', "\nAWS_ACCESS_KEY=''"
       @template.append_file '.env.sample', "\nAWS_SECRET_KEY=''"
-      @template.append_file '.env', "\nAWS_SECRET_KEY=''"
       @template.append_file '.env.sample', "\nAWS_S3_BUCKET=''"
+      @template.append_file '.env', "\nAWS_ACCESS_KEY=''"
+      @template.append_file '.env', "\nAWS_SECRET_KEY=''"
       @template.append_file '.env', "\nAWS_S3_BUCKET=''"
-    end
+   end
 
     def add_production_env_config
       @template.gsub_file 'config/environments/production.rb',
