@@ -11,6 +11,7 @@ module Recipes
       @template.gem 'keynote'
       @template.gem 'kaminari'
       @template.gem 'premailer-rails'
+      @template.gem 'bootsnap'
 
       yield if block_given?
 
