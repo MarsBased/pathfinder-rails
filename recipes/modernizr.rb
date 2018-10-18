@@ -1,6 +1,11 @@
 module Recipes
   class Modernizr < Base
 
+    is_auto_runnable
+
+    askable 'Do you want to use Modernizr?'
+    is_confirmable
+
     def gems
       @template.gem 'modernizr-rails'
     end

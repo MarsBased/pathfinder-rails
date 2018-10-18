@@ -1,108 +1,111 @@
-require_relative 'recipes/base'
-require_relative 'recipes/active_admin'
-require_relative 'recipes/airbrake'
-require_relative 'recipes/assets'
-require_relative 'recipes/carrier_wave'
-require_relative 'recipes/configuration'
-require_relative 'recipes/database'
-require_relative 'recipes/devise'
-require_relative 'recipes/git_ignore'
-require_relative 'recipes/modernizr'
-require_relative 'recipes/mailgun'
-require_relative 'recipes/pundit'
-require_relative 'recipes/redis'
-require_relative 'recipes/rollbar'
-require_relative 'recipes/sidekiq'
-require_relative 'recipes/simple_form'
-require_relative 'recipes/status'
-require_relative 'recipes/testing'
-require_relative 'recipes/utils'
-require_relative 'recipes/webpacker'
+require_relative 'configurators'
+require_relative 'utils'
+require 'tty-prompt'
+
+Dir[File.join(__dir__, 'recipes', '*.rb')].each do |recipe_file|
+  require recipe_file
+end
 
 class Pathfinder
 
-  attr_reader :template, :app_name
+  attr_reader :template, :app_name, :utils, :prompt, :recipes_list
 
-   def initialize(app_name, template)
-     @template = template
-     @recipes_list = []
-     @app_name = app_name
-   end
+  def initialize(app_name, template)
+    @app_name = app_name
+    @template = template
+    @prompt = TTY::Prompt.new
+    @utils = ::Utils.new(@prompt)
+    @recipes_list = []
+    @configurators_list = []
+  end
 
-   def add_recipe(recipe)
-     @recipes_list << recipe
-     recipe
-   end
+  def ask_for_recipes
+    ::AutoRunnable.auto_runnables_for_module(::Recipes).each do |recipe|
+      add_recipe(recipe.new(self))
+    end
+  end
 
-   def generate_gems
-     recipes_operation(:gems)
-   end
+  def ask_for_configurators
+    add_recipe_from_configurator(Configurators::Monitoring.new(self))
+    add_configurator(Configurators::ActiveAdmin.new(self))
+    add_configurator(Configurators::FormFramework.new(self))
+    add_configurator(Configurators::ImageMagick.new(self))
+  end
 
-   def generate_initializers
-     recipes_operation(:cook)
-   end
+  def call
+    ask_for_recipes
+    ask_for_configurators
+    @template.instance_exec(self) do |pathfinder|
+      configuration = Recipes::Configuration.new(self)
 
-   def ask_for_recipes
-     add_recipe(Recipes::Database.new(self))
-     add_recipe(Recipes::CarrierWave.new(self)) if @template.yes?('Do you want to use Carrierwave?')
-     if @template.yes?('Do you want to use Mailgun for production emails?')
-       add_recipe(Recipes::Mailgun.new(self))
-     end
-     aux = case @template.ask('Choose Monitoring Engine:',
-                    limited_to: %w(rollbar airbrake none))
-           when 'rollbar'
-             Recipes::Rollbar.new(self)
-           when 'airbrake'
-             Recipes::Airbrake.new(self)
-           else
-           end
-     add_recipe(aux) if aux.present?
-     add_recipe(Recipes::Assets.new(self))
-     add_recipe(Recipes::Devise.new(self))
-     add_recipe(Recipes::Pundit.new(self))
-     add_recipe(Recipes::GitIgnore.new(self))
-     add_recipe(Recipes::Redis.new(self))
-     add_recipe(Recipes::Sidekiq.new(self))
-     add_recipe(Recipes::SimpleForm.new(self))
-     add_recipe(Recipes::Status.new(self))
-     add_recipe(Recipes::Webpacker.new(self))
-     if @template.yes?('Do you want to use Modernizr?')
-       add_recipe(Recipes::Modernizr.new(self))
-     end
-     add_recipe(Recipes::ActiveAdmin.new(self))
-     add_recipe(Recipes::Testing.new(self))
-   end
+      remove_file 'Gemfile'
+      run 'touch Gemfile'
+      add_source 'https://rubygems.org'
 
-   def call
-     ask_for_recipes
-     @template.instance_exec(self) do |pathfinder|
-       utils = Recipes::Utils.new(self)
-       configuration = Recipes::Configuration.new(self)
+      ruby_version = pathfinder.utils.ask_with_default(
+        'Which version of ruby do you want to use?',
+        RUBY_VERSION)
 
-       remove_file 'Gemfile'
-       run 'touch Gemfile'
-       add_source 'https://rubygems.org'
+      append_file 'Gemfile', "ruby '#{ruby_version}'"
 
-       append_file 'Gemfile', "ruby \'#{utils.ask_with_default('Which version of ruby do you want to use?', default: RUBY_VERSION)}\'"
+      configuration.gems do
+        pathfinder.generate_recipes_gems
+        pathfinder.generate_configurators_gems
+      end
 
-       configuration.gems do
-         pathfinder.generate_gems
-       end
+      after_bundle do
+        run 'spring stop'
 
-       after_bundle do
-         run 'spring stop'
+        configuration.cook
 
-         configuration.cook
+        pathfinder.generate_recipes_initializers
+      end
+    end
+  end
 
-         pathfinder.generate_initializers
-       end
-     end
-   end
+  def add_recipe(recipe)
+    if recipe.ask?
+      @recipes_list << recipe if recipe.ask!
+    else
+      @recipes_list << recipe
+    end
 
-   private
+    recipe
+  end
 
-   def recipes_operation(method)
-     @recipes_list.map(&method.to_sym)
-   end
+  def add_configurator(configurator)
+    if configurator.dependent?
+      @configurators_list << configurator if configurator.perform?
+    else
+      @configurators_list << configurator
+    end
+  end
+
+  def add_recipe_from_configurator(configurator)
+    recipe = configurator.recipe
+    add_recipe(recipe) if recipe
+  end
+
+  def generate_configurators_gems
+    configurators_operation(:cook)
+  end
+
+  def generate_recipes_gems
+    recipes_operation(:gems)
+  end
+
+  def generate_recipes_initializers
+    recipes_operation(:cook)
+  end
+
+  private
+
+  def recipes_operation(method)
+    @recipes_list.map(&method.to_sym)
+  end
+
+  def configurators_operation(method)
+    @configurators_list.map(&method.to_sym)
+  end
 
 end

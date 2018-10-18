@@ -1,6 +1,8 @@
 module Recipes
   class Webpacker < Base
 
+    is_auto_runnable
+
     def gems
       @template.gem 'webpacker', '~> 3.0'
     end

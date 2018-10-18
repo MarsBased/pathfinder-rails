@@ -6,15 +6,10 @@ module Recipes
 
     def gems
       @template.gem 'rails', '~> 5.1.0'
-      # Model
+
       @template.gem 'aasm'
       @template.gem 'keynote'
-      @template.gem 'paranoia' if  @template.yes?('Do you want to use Soft Deletes?')
-      # Searchs
-      @template.gem 'ransack' if  @template.yes?('Do you want to use Ransack?')
       @template.gem 'kaminari'
-      @template.gem 'searchkick' if  @template.yes?('Are you going to use ElasticSearch?')
-      # Emails
       @template.gem 'premailer-rails'
 
       yield if block_given?

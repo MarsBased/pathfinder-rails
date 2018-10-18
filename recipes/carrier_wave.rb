@@ -1,10 +1,14 @@
 module Recipes
   class CarrierWave < Base
 
+    is_auto_runnable
+
+    askable 'Do you want to use Carrierwave?'
+    is_confirmable
+
     def gems
       @template.gem 'carrierwave'
       @template.gem 'fog-aws'
-      @template.gem 'mini_magick' if @template.yes?("Are you going to handle images with CarrierWave?")
     end
 
     def cook
@@ -35,5 +39,6 @@ module Recipes
         @template.append_file 'application.yml', "\nAWS_S3_BUCKET: ''"
       end
     end
+
   end
 end
