@@ -1,26 +1,24 @@
 module Recipes
   class Deploy < Base
 
+    is_auto_runnable
+    askable 'Where are you planning to deploy it?'
+    optionable %w(Cloud66 Docker None)
+
     def initialize(pathfinder, type: 'none')
-      if !%w(cloud66 docker none).include?(type)
-        fail 'none, docker or cloud66 are the only allowed options for deploy recipe'
-      end
       super(pathfinder)
-      @type = type
     end
 
-    def init_file
-      case @type
-      when 'docker' then docker_config_files
-      when 'cloud66' then cloud66_config_files
+    def cook
+      case ask!
+      when 'Docker' then docker_config_files
+      when 'Cloud66' then cloud66_config_files
       end
     end
 
     private
 
     def cloud66_config_files
-      @template.add_file '.cloud66/bower.sh',
-                         relative_file_content('deploy/cloud66/bower.sh')
       @template.add_file '.cloud66/cache_permissions.sh',
                          relative_file_content('deploy/cloud66/cache_permissions.sh')
       @template.add_file '.cloud66/deploy_hooks.yml',
