@@ -20,15 +20,14 @@ module Recipes
 
     def add_initializer
       @template.initializer 'sidekiq.rb', <<~CODE
-        redis_host = Redis.current.client.host
-        redis_port = Redis.current.client.port
+        redis_url = Redis.current.id
 
         Sidekiq.configure_server do |config|
-          config.redis = { url: "redis://\#{redis_host}:\#{redis_port}" }
+          config.redis = { url: redis_url }
         end
 
         Sidekiq.configure_client do |config|
-          config.redis = { url: "redis://\#{redis_host}:\#{redis_port}" }
+          config.redis = { url: redis_url }
         end
       CODE
     end
